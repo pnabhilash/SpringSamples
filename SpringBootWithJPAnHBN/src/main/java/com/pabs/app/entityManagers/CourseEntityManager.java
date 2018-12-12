@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class CourseEntityManager {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @PersistenceContext
+    //@PersistenceContext
     @Autowired
     EntityManager entityManager;
 
@@ -33,7 +32,6 @@ public class CourseEntityManager {
         return entityManager.find(Course.class,id);
 
     }
-
 
     /*
       Refer Junit Test case how to test a List of Course retrieved
@@ -57,20 +55,14 @@ public class CourseEntityManager {
                 entityManager.merge(course);
         }
 
-
     }
 
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         Course course = findById(id);
         entityManager.remove(course);
 
     }
-
-
-
-
-
 
 
 }

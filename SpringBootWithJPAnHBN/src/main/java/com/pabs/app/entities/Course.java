@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import java.util.Objects;
 
 @Entity
 /*
@@ -35,6 +36,7 @@ public class Course {
     }
 
 
+
     public Long getId() {
         return id;
     }
@@ -59,6 +61,20 @@ public class Course {
                 .append("id", id)
                 .append("name", name)
                 .toString();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return name.equals(course.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
 }
