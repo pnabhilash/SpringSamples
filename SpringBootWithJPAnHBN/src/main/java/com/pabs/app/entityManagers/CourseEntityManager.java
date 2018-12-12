@@ -57,6 +57,63 @@ public class CourseEntityManager {
 
     }
 
+    /**
+     * Saving and updating same session though persist operations is called only once
+     * Since explicit detach is called any changes happens to the same object get updated and commiitted to persistent object
+     */
+
+    public void saveAndUpdateInSameSession(){
+        Course course=new Course("Automated Testing for IPhone Apps ");
+        entityManager.persist(course);
+        course.setName("Automated Testing for IPhone Apps- Updated 2019 "); // In DB this result would be seen.
+    }
+
+    /**
+     * Per se, entityManager.flush methods would invoke automatic call - immediate call to persist data to underlying DB mechanism.
+     *
+     * This call actually call sql query fire to the db. In a way a DB constraints if any - such as column width data type can be
+     * instantly noticed here
+     *
+     *
+     */
+
+
+    public void saveAndUpdateInSameSessionButFlush(){
+
+        Course course=new Course("Artifiical Intelligene Decoded  ");
+        entityManager.persist(course);
+        entityManager.flush();
+        course.setName("Artifiical Intelligene Decoded - Updated 2019"); // In DB this result would be seen
+
+    }
+
+
+    public void saveAndUpdateWithDetachedObjectInSameSession(){
+        Course course=new Course("Component Based Design ");
+        entityManager.persist(course);
+        entityManager.flush();  // At this stage - course get saved to db.
+        entityManager.detach(course); // detaching the object from the current session  alternative is em.clear method !!
+        course.setName("Component Based Design - Updated 2019"); // this will be ignored !!
+
+    }
+
+
+
+    public void saveAndUpdateWithSessionRefresh(){
+        Course course=new Course("Component Based Design for MicroService ");
+        entityManager.persist(course);
+        entityManager.flush();  // At this stage - course get saved to db.
+        course.setName("Component Based Design for MicroService- Updated 2019");
+        entityManager.refresh(course);  // This will bring back the data in db at the stage of flush point. The setName will not be reflected as it did not get persisted to db.ßßß
+
+    }
+
+
+
+
+
+
+
 
     public void deleteById(Long id) {
         Course course = findById(id);

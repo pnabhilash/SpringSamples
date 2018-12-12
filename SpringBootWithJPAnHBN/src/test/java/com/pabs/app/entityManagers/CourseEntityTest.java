@@ -62,5 +62,31 @@ public void testFindAllData(){
 }
 
 
+/*
+   This test though passed did not yield expected results !! 2 separate calls  save is treated here as 2 separate session and 2 inserts.
+   Testing did not yield expected save in non-detached manner...
+
+ */
+
+@Test
+    public void testPersistAndUpdateDatainSameSession(){
+    Course newCourse = new Course("Automated Testing ");
+    courseEntityManager.save(newCourse);
+
+    List<Course> courseList=courseEntityManager.findAll();
+    assertThat(courseList,hasItems(newCourse));
+    courseList.forEach(Course ->System.out.println("B4 Update "+Course));
+
+
+    newCourse.setName("Automated Testing Updated");
+    courseEntityManager.save(newCourse);
+
+    List<Course> courseList2=courseEntityManager.findAll();
+    assertThat(courseList2,hasItems(newCourse));
+    courseList2.forEach(Course ->System.out.println(Course));
+
+
+}
+
 
 }
