@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -19,7 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
+@Transactional
 public class CourseEntityTest {
 
 
@@ -27,6 +29,11 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 @Autowired
 CourseEntityManager courseEntityManager;
+
+@Autowired
+EntityManager entityManager;
+
+
 
 
 /*
@@ -87,6 +94,38 @@ public void testFindAllData(){
 
 
 }
+
+    // This test will fail stating null values are not allowed.
+    @Test(expected = javax.persistence.PersistenceException.class)
+    public void testNoNullValuesAllowedForColumnName(){
+
+            Course newCourse = new Course("Testing Methodologies  ");
+            entityManager.persist(newCourse);
+            newCourse.setName(null);
+            entityManager.flush();
+
+    }
+
+    @Test(expected = javax.persistence.PersistenceException.class)
+    public void testUniqueValuesOnlyAllowedForCourseISDNColumn(){
+        Course newCourse = new Course("Testing Methodologies For Mobile Apps  ");
+        entityManager.persist(newCourse);
+        newCourse.setCourseBookISDN("111111");
+        entityManager.flush();
+        displayResults();
+    }
+
+
+    private void displayResults(){
+
+        List<Course> courseList=courseEntityManager.findAll();
+        courseList.forEach(Course ->System.out.println("All Courses  "+Course));
+
+
+    }
+
+
+
 
 
 }

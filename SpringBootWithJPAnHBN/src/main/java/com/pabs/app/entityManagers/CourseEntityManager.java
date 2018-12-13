@@ -63,7 +63,7 @@ public class CourseEntityManager {
      */
 
     public void saveAndUpdateInSameSession(){
-        Course course=new Course("Automated Testing for IPhone Apps ");
+        Course course=new Course("Automated Testing for IPhone Apps ","666666");
         entityManager.persist(course);
         course.setName("Automated Testing for IPhone Apps- Updated 2019 "); // In DB this result would be seen.
     }
@@ -80,7 +80,7 @@ public class CourseEntityManager {
 
     public void saveAndUpdateInSameSessionButFlush(){
 
-        Course course=new Course("Artifiical Intelligene Decoded  ");
+        Course course=new Course("Artifiical Intelligene Decoded  ","777777");
         entityManager.persist(course);
         entityManager.flush();
         course.setName("Artifiical Intelligene Decoded - Updated 2019"); // In DB this result would be seen
@@ -89,7 +89,7 @@ public class CourseEntityManager {
 
 
     public void saveAndUpdateWithDetachedObjectInSameSession(){
-        Course course=new Course("Component Based Design ");
+        Course course=new Course("Component Based Design ","888888");
         entityManager.persist(course);
         entityManager.flush();  // At this stage - course get saved to db.
         entityManager.detach(course); // detaching the object from the current session  alternative is em.clear method !!
@@ -100,18 +100,13 @@ public class CourseEntityManager {
 
 
     public void saveAndUpdateWithSessionRefresh(){
-        Course course=new Course("Component Based Design for MicroService ");
+        Course course=new Course("Component Based Design for MicroService ","999999");
         entityManager.persist(course);
         entityManager.flush();  // At this stage - course get saved to db.
         course.setName("Component Based Design for MicroService- Updated 2019");
-        entityManager.refresh(course);  // This will bring back the data in db at the stage of flush point. The setName will not be reflected as it did not get persisted to db.ßßß
+        entityManager.refresh(course);  // This will bring back the data in db at the stage of flush point. The setName will not be reflected as it did not get persisted t
 
     }
-
-
-
-
-
 
 
 

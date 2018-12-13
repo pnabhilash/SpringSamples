@@ -27,9 +27,12 @@ public class SpringBootJpaExperimentsApplication implements CommandLineRunner {
 
 		logger.info("Course find by id  {} ",course.toString());
 		logger.info("Testing Save / Update / Insert / Detach on same session  ");
-		courseEntityManager.saveAndUpdateInSameSession();
-		courseEntityManager.saveAndUpdateInSameSessionButFlush();
-		courseEntityManager.saveAndUpdateWithDetachedObjectInSameSession();
+
+		//enable only if needed !
+
+		//courseEntityManager.saveAndUpdateInSameSession();
+		//courseEntityManager.saveAndUpdateInSameSessionButFlush();
+		//courseEntityManager.saveAndUpdateWithDetachedObjectInSameSession();
 
 	}
 }
