@@ -104,7 +104,7 @@ public class CourseEntityManager {
         entityManager.persist(course);
         entityManager.flush();  // At this stage - course get saved to db.
         course.setName("Component Based Design for MicroService- Updated 2019");
-        entityManager.refresh(course);  // This will bring back the data in db at the stage of flush point. The setName will not be reflected as it did not get persisted t
+        entityManager.refresh(course);  // This will bring back the data in db at the stage of flush point. The setNumber will not be reflected as it did not get persisted t
 
     }
 

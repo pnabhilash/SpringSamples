@@ -1,7 +1,8 @@
 package com.pabs.app;
 
-import com.pabs.app.entities.Course;
+import com.pabs.app.entities.Student;
 import com.pabs.app.entityManagers.CourseEntityManager;
+import com.pabs.app.entityManagers.StudentEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,16 @@ public class SpringBootJpaExperimentsApplication implements CommandLineRunner {
 	@Autowired
 	private  CourseEntityManager courseEntityManager;
 
+	@Autowired
+	private StudentEntityManager studentEntityManager;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootJpaExperimentsApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		/*
 		Course course=courseEntityManager.findById(101L);
 
 		logger.info("Course find by id  {} ",course.toString());
@@ -33,6 +38,11 @@ public class SpringBootJpaExperimentsApplication implements CommandLineRunner {
 		//courseEntityManager.saveAndUpdateInSameSession();
 		//courseEntityManager.saveAndUpdateInSameSessionButFlush();
 		//courseEntityManager.saveAndUpdateWithDetachedObjectInSameSession();
+		*/
+
+
+		Student student=studentEntityManager.saveStudentWithPassport();
+		logger.info(student.toString());
 
 	}
 }

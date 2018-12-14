@@ -11,7 +11,7 @@
     <groupId>com.peetAbSolutions.jpa</groupId>
     <artifactId>peetab-springboot-jpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringBootJPAExperiments</name>
+    <number>SpringBootJPAExperiments</number>
     <description>Demo project for Spring Boot with JPA and Hibernate</description>
 
     <properties>

@@ -21,8 +21,8 @@ Refer the sql being fired for the same on the fly
 /*
 A predefined named query applied here - One can define as many as predefined query and apply at the Repository Level
  */
-@NamedQuery(name="find_all_Courses_Details", query="Select c from Course c")
-public class Course {
+//@NamedQuery(name="find_all_Courses_Details", query="Select c from Course c")
+public class Student {
 
 
     @Id
@@ -31,20 +31,12 @@ public class Course {
 
 
     /*
-    ideally @Column is used when the column is different from underlying table col name | nullable =false ensure no NULL values are allowed
+    ideally @Column used when the column is different from underlying table col name | nullable =false ensure no NULL values are allowed
     refer test cases how null value insert being tested
     */
-    @Column(name = "name",nullable=false)
+    @Column(name = "name")
     private String name;
 
-
-    /*
-         Some other Column annotations are unique (for SSN type cols) length limit etc
-         Can have separate test cases for testing these conditions
-
-         */
-    @Column(name = "isdn",unique = true,length = 8)
-    private String courseBookISDN;
 
     // LocalDateTime is Java 8 feature which has optimized Date functions a lot
     // Note CreationTimeStamp annotation belongs to Hibernate and Not JPA
@@ -56,23 +48,24 @@ public class Course {
     @UpdateTimestamp
     private LocalDateTime lastUpdatedDate;
 
+    /*
+       Defining here ONE-to-ONE mapping relationship. A Student association with a unique passport number.
+       Define OneToOne annotation and run the app and see the Student table to see extra col got added !
+
+     */
+    @OneToOne
+    private Passport passport;
 
 
-
-    public Course(){
+    public Student(){
 
     }
 
 
-    public Course(String name){
+    public Student(String name){
         this.name=name;
     }
 
-
-    public Course(String name,String courseBookISDN){
-        this.name=name;
-        this.courseBookISDN=courseBookISDN;
-    }
 
 
     public Long getId() {
@@ -92,21 +85,32 @@ public class Course {
         this.name = name;
     }
 
+    public Passport getPassport() {
+        return passport;
+    }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("name", name)
-                .append("courseBookISDN", courseBookISDN)
-                .toString();
+    public void setPassport(Passport passport) {
+        this.passport = passport;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return name.equals(course.name);
+        Student student = (Student) o;
+        return name.equals(student.name);
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("name", name)
+                .append("createdDate", createdDate)
+                .append("lastUpdatedDate", lastUpdatedDate)
+                .append("passport", passport.toString())
+                .toString();
     }
 
     @Override
@@ -114,13 +118,5 @@ public class Course {
         return Objects.hash(name);
     }
 
-
-    public String getCourseBookISDN() {
-        return courseBookISDN;
-    }
-
-    public void setCourseBookISDN(String courseBookISDN) {
-        this.courseBookISDN = courseBookISDN;
-    }
 
 }
