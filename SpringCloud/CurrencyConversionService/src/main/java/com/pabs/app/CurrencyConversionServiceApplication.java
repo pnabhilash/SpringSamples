@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients("com.pabs.app")
-@EnableDiscoveryClient
+@EnableDiscoveryClient  //// This will make Zuul Server component registered to Eureka Service Registry
 public class CurrencyConversionServiceApplication {
 
 	public static void main(String[] args) {
